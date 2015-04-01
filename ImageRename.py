@@ -1,9 +1,12 @@
 import os
+import sys
 
 dirPath = "."
-prefixString = "MyCam_"
+defaultPrefixString = "MyCam_"
 
-def renameFiles():
+def renameFiles(prefixString):
+    if not prefixString:
+        prefixString = defaultPrefixString
     files = os.listdir(dirPath)
     files.remove("ImageRename.py")
     for fileName in files:
@@ -13,4 +16,9 @@ def renameFiles():
             os.rename(fileName, newFileName)
 
 if __name__ == "__main__":
-    renameFiles()
+    try:
+        prefixString = sys.argv[1]
+        renameFiles(prefixString)
+    except IndexError:
+        renameFiles("")
+
